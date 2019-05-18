@@ -44,8 +44,8 @@ struct MoaHttpImage {
       onError(error, response)
       return
     }
-      
-    if let data = data, let image = MoaImage(data: data) {
+    let scaleFactor = (10*1024)/((data?.count ?? 0) / 1024) < 1 ? (10*1024)/((data?.count ?? 0) / 1024) : 1
+    if let data = data, let image = UIImage(data: data, scale: CGFloat(scaleFactor)) {
       onSuccess(image)
     } else {
       // Failed to convert response data to UIImage
